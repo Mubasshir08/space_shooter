@@ -11,6 +11,14 @@ pygame.display.set_caption("Space Shooter")
 icon = pygame.image.load('./images/icon.png')
 pygame.display.set_icon(icon)
 
+# player icon
+player_icon = pygame.image.load('./images/spaceship.png')
+playerX = 370
+playerY = 470
+
+def player():
+    screen.blit(player_icon, (playerX,playerY))
+
 # game loop
 running = True
 while running:
@@ -18,5 +26,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     screen.fill((0,255,255))
+    player()
     pygame.display.update()
 
