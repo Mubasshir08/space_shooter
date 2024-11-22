@@ -31,6 +31,11 @@ enemyY = random.randint(100,150)
 def enemy(x,y):
     screen.blit(enemy_icon, (x,y))
 
+# background image
+img = pygame.image.load('./images/background.png')
+def bgImg():
+    screen.blit(img, (0,0))
+
 # game loop
 # game loop
 running = True
@@ -42,9 +47,9 @@ while running:
         # Key press event
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                playerX_change += 0.2  # Start moving right
+                playerX_change += 5  # Start moving right
             if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                playerX_change -= -0.2  # Start moving left
+                playerX_change -= 5  # Start moving left
 
         # Key release event
         if event.type == pygame.KEYUP:
@@ -61,7 +66,7 @@ while running:
         playerX = 736
 
     # Clear screen and redraw player
-    screen.fill((0, 255, 255))
+    bgImg()
     player(playerX, playerY)
     enemy(enemyX,enemyY)
     pygame.display.update()
