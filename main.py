@@ -26,6 +26,8 @@ def player(x,y):
 enemy_icon = pygame.image.load('./images/alien.png')
 enemyX = random.randint(0,736)
 enemyY = random.randint(100,150)
+enemyX_change = 5
+enemyY_change = 10
 
 # enemy init function
 def enemy(x,y):
@@ -64,6 +66,20 @@ while running:
         playerX = 0
     if playerX >= 736:  # 800 (screen width) - 64 (player width)
         playerX = 736
+    
+    # enemy position change
+    if enemyX <= 0:
+        enemyX_change += 5
+        enemyY_change += enemyY_change
+    if enemyX >= 736:  # 800 (screen width) - 64 (player width)
+        enemyX_change -= 5
+        enemyY_change += enemyY_change
+    
+    print(enemyY + enemyY_change)
+    # Update player position
+    enemyX += enemyX_change
+
+    
 
     # Clear screen and redraw player
     bgImg()
