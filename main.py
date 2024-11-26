@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 # init pygame
 pygame.init()
@@ -46,6 +47,16 @@ def bullet_fire(x,y):
     bullet_state = 'fire'
     screen.blit(bullet_icon, (x,y))
 
+# check isCollision
+def isCollision(eX,eY,bX,bY):
+    distance = math.sqrt((math.pow((eX-bX),2)) + (math.pow((eY-bY),2)))
+    # print(distance)
+    if distance < 24:
+        return True
+    else:
+        return False
+
+
 # background image
 img = pygame.image.load('./images/background.png')
 def bgImg():
@@ -67,8 +78,10 @@ while running:
             if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 playerX_change -= 5  # Start moving 
             if event.key == pygame.K_SPACE:
-                bullet_fire((playerX + 17), (bulletY))
-                print('space')
+                if bullet_state is "ready":
+                    bulletX = playerX
+                    bullet_fire((bulletX + 17), (bulletY))
+                    # print('space')
 
         # Key release event
         if event.type == pygame.KEYUP:
@@ -100,12 +113,21 @@ while running:
     # enemyY += enemyY_change
     # print(enemyX)
     
+    if bulletY <= 0:
+        bulletY = 480
+        bullet_state = 'ready'
 
-    # Clear screen and redraw player
-    player(playerX, playerY)
     if bullet_state == 'fire':
-        bullet_fire((playerX + 17), (bulletY - 30))
+        bullet_fire((bulletX + 17), (bulletY - 30))
         bulletY -= bulletY_change
+
+    # collision
+    collision = isCollision(enemyX,enemyY,bulletX,bulletY)
+    if collision:
+        enemyX = random.randint(0,736)
+        enemyY = random.randint(100,150)
+
+    player(playerX, playerY)
     enemy(enemyX,enemyY)
     pygame.display.update()
 
